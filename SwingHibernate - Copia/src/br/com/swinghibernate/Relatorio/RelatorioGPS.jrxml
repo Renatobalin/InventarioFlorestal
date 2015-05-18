@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1320b4db-b371-4b76-8947-344aba0a26db">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     dadosgps."coordx" AS dadosgps_coordx,
+     dadosgps."coordy" AS dadosgps_coordy,
+     dadosgps."data" AS dadosgps_data,
+     dadosgps."hora" AS dadosgps_hora,
+     dadosgps."modelo" AS dadosgps_modelo,
+     dadosgps."posicao" AS dadosgps_posicao,
+     dadosgps."t" AS dadosgps_t,
+     dadosgps."utm" AS dadosgps_utm
+FROM
+ dadosgps]]>
+	</queryString>
+	<field name="dadosgps_coordx" class="java.lang.Float"/>
+	<field name="dadosgps_coordy" class="java.lang.Float"/>
+	<field name="dadosgps_data" class="java.sql.Date"/>
+	<field name="dadosgps_hora" class="java.sql.Time"/>
+	<field name="dadosgps_modelo" class="java.lang.String"/>
+	<field name="dadosgps_posicao" class="java.lang.Float"/>
+	<field name="dadosgps_t" class="java.lang.String"/>
+	<field name="dadosgps_utm" class="java.lang.String"/>
+	<group name="dadosgps_coordx">
+		<groupExpression><![CDATA[$F{dadosgps_coordx}]]></groupExpression>
+	</group>
+	<group name="dadosgps_coordy">
+		<groupExpression><![CDATA[$F{dadosgps_coordy}]]></groupExpression>
+	</group>
+	<group name="dadosgps_hora">
+		<groupExpression><![CDATA[$F{dadosgps_hora}]]></groupExpression>
+	</group>
+	<group name="dadosgps_posicao">
+		<groupExpression><![CDATA[$F{dadosgps_posicao}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="50" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="340" y="10" width="100" height="20" uuid="3db5f573-5eb5-4d0d-b067-e812439847ea"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm">
+				<reportElement x="440" y="10" width="100" height="20" uuid="176a165f-e4d2-46dc-911e-ca2d6f099c71"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="109" y="10" width="100" height="20" uuid="010b6644-7e9f-40bc-87ca-2bae44bfb580"/>
+				<textFieldExpression><![CDATA[Relatorio dados GPS]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="61" height="20" uuid="f616dbdb-706e-49d5-8351-c0fcf9131232"/>
+				<text><![CDATA[t]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="133" y="0" width="55" height="20" uuid="1ebaa017-b1dd-4db0-add3-81dfd3474a6b"/>
+				<text><![CDATA[modelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="61" y="0" width="72" height="20" uuid="b0928f83-5500-4168-a2f8-d6df1bd10c8f"/>
+				<text><![CDATA[utm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="0" width="73" height="20" uuid="a94d3e93-6130-4b3c-bf71-f298ccdaf12d"/>
+				<text><![CDATA[coordx]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="261" y="0" width="68" height="20" uuid="1b3c3d07-662b-4e08-825b-ea64aed82dad"/>
+				<text><![CDATA[coordy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="329" y="0" width="74" height="20" uuid="2ef2a013-9271-4c51-82c1-f92ecb8c403e"/>
+				<text><![CDATA[data]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="0" width="54" height="20" uuid="fe867df5-4b5b-4161-a734-5f5449dab4e8"/>
+				<text><![CDATA[hora]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="457" y="0" width="98" height="20" uuid="589901c5-ff0e-47d8-908b-675ca591e75e"/>
+				<text><![CDATA[posicao]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="40" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="61" height="20" uuid="2f08399f-4ee4-4f4c-8b03-bc6bf5ffb8a7"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_t}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="61" y="0" width="72" height="20" uuid="d8b075f3-60fd-45e7-809d-12aec700bf60"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_utm}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="133" y="0" width="55" height="20" uuid="5bc348ff-1124-439a-a4d9-dac473bf6b38"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_modelo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="0" width="73" height="20" uuid="6a7b0305-6b1e-4f1c-8ba2-f3c214f456b8"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_coordx}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="261" y="0" width="68" height="20" uuid="33bf48b3-89cc-4a65-9d35-f2ea296961a5"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_coordy}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="0" width="74" height="20" uuid="e5f0171b-90ed-495f-ad49-e09837c2d0df"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="54" height="20" uuid="e6316feb-306d-4103-8244-e55a703ca375"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_hora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="457" y="0" width="83" height="20" uuid="ae79379c-189e-4200-9d4a-7a0f7d7e02dc"/>
+				<textFieldExpression><![CDATA[$F{dadosgps_posicao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
