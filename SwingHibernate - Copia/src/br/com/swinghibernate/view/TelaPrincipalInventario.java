@@ -1,5 +1,6 @@
 package br.com.swinghibernate.view;
 
+import br.com.swinghibernate.config.HibernateUtil;
 import static br.com.swinghibernate.config.HibernateUtil.getSessionFactory;
 import static java.awt.EventQueue.invokeLater;
 import java.awt.HeadlessException;
@@ -21,10 +22,16 @@ import static java.util.logging.Logger.getLogger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
+import static javax.swing.JOptionPane.showMessageDialog;
 import static javax.swing.UIManager.getInstalledLookAndFeels;
+import static javax.swing.UIManager.setLookAndFeel;
+import static javax.swing.UIManager.setLookAndFeel;
+import static javax.swing.UIManager.setLookAndFeel;
 import static javax.swing.UIManager.setLookAndFeel;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -40,13 +47,12 @@ import org.hibernate.Transaction;
 public class TelaPrincipalInventario extends javax.swing.JFrame {
 
     private static final long serialVersionUID = 1L;
-    private final Connection Session;
+    private Connection Session ;
 
     /**
      * Creates new form TelaPrincipalInventario
      */
     public TelaPrincipalInventario() {
-        this.Session = (Connection) getSessionFactory().openSession();
         initComponents();
         this.setExtendedState(this.getExtendedState() | MAXIMIZED_BOTH);
     }
