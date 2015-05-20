@@ -256,25 +256,21 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
         }
 
         try {
-            int[] selected = jTableDAP.getSelectedRows();
-            int se = jTableDAP.getSelectedRow();
-            List<br.com.swinghibernate.view.Dadosdap> RemoverLinha = new ArrayList<br.com.swinghibernate.view.Dadosdap>(selected.length);
-            for (int idx = 0; idx < selected.length; idx++) {
-                // Dadosdap dados = RemoverLinha.get(jTableDAP.convertRowIndexToModel(selected[idx]));
-                Dadosdap dados = RemoverLinha.get(idx);
+            List<br.com.swinghibernate.view.Dadosdap> RemoverLinha = new ArrayList<br.com.swinghibernate.view.Dadosdap>(linha);
+            Dadosdap dados = RemoverLinha.get(linha);
 
-                transaction = session.beginTransaction();
-                DadosDap cad = new DadosDap();
-                cad.setIdDAP(dados.getIddap());
-                cad.setAltura(dados.getAltura());
-                cad.setCalG(dados.getCalg());
-                cad.setCalX(dados.getCalx());
-                cad.setCalY(dados.getCaly());
+            transaction = session.beginTransaction();
+            DadosDap cad = new DadosDap();
+            cad.setIdDAP(dados.getIddap());
+            cad.setAltura(dados.getAltura());
+            cad.setCalG(dados.getCalg());
+            cad.setCalX(dados.getCalx());
+            cad.setCalY(dados.getCaly());
 
-                session.delete(cad);
-                transaction.commit();
-                showMessageDialog(null, "Deletado com sucesso", " ", 1);
-            }
+            session.delete(cad);
+            transaction.commit();
+            showMessageDialog(null, "Deletado com sucesso", " ", 1);
+
         } catch (HeadlessException ex) {
             ex.getMessage();
         } catch (HibernateException ex) {

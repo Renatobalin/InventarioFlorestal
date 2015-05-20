@@ -172,8 +172,6 @@ public class TelaPrincipalInventario extends javax.swing.JFrame {
         } catch (JRException ex) {
             ex.getMessage();
         }
-
-
     }//GEN-LAST:event_RelatorioDAPActionPerformed
 
     /**
