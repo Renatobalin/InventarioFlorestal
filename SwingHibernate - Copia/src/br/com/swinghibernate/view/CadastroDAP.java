@@ -145,56 +145,60 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
         DiametroArvore.setEnabled(true);
         AlturaArvore.setEnabled(true);
         Btn_Salvar.setEnabled(true);
-        Btn_Deletar.setEnabled(true);
+        Btn_Deletar.setEnabled(false);
     }//GEN-LAST:event_Btn_InserirActionPerformed
 
 
     private void Btn_SalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_SalvarActionPerformed
-        Session session = getSessionFactory().openSession();
-        Transaction transaction = null;
+        if (DiametroArvore.getText().isEmpty() || AlturaArvore.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Valor Digitado é invalido");
+            DiametroArvore.requestFocus();
+        } else {
+            Session session = getSessionFactory().openSession();
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
 
-        try {
-            transaction = session.beginTransaction();
+                String diamd = DiametroArvore.getText();
+                diamd = diamd.replaceAll(",", ".");
+                Float Diametro = valueOf(diamd);
 
-            String diamd = DiametroArvore.getText();
-            diamd = diamd.replaceAll(",", ".");
-            Float Diametro = valueOf(diamd);
+                String altr = AlturaArvore.getText();
+                altr = altr.replaceAll(",", ".");
+                Float Altura = valueOf(altr);
 
-            String altr = AlturaArvore.getText();
-            altr = altr.replaceAll(",", ".");
-            Float Altura = valueOf(altr);
+                float calcx = CalculaX();
+                float calcy = CalculaY();
+                float calcgm = calculaGcm();
+                String dia = valueOf(Diametro);
+                String alt = valueOf(Altura);
+                String calx = String.valueOf(calcx);
+                String caly = String.valueOf(calcy);
+                String calg = String.valueOf(calcgm);
 
-            float calcx = CalculaX();
-            float calcy = CalculaY();
-            float calcgm = calculaGcm();
-            String dia = valueOf(Diametro);
-            String alt = valueOf(Altura);
-            String calx = String.valueOf(calcx);
-            String caly = String.valueOf(calcy);
-            String calg = String.valueOf(calcgm);
+                DefaultTableModel val = (DefaultTableModel) jTableDAP.getModel();
+                val.addRow(new String[]{dia, alt, calx, caly, calg});
 
-            DefaultTableModel val = (DefaultTableModel) jTableDAP.getModel();
-            val.addRow(new String[]{dia, alt, calx, caly, calg});
+                DadosDap cad = new DadosDap();
+                cad.setDiametro(Diametro);
+                cad.setAltura(Altura);
+                cad.setCalX(calcx);
+                cad.setCalY(calcy);
+                cad.setCalG(calcgm);
 
-            DadosDap cad = new DadosDap();
-            cad.setDiametro(Diametro);
-            cad.setAltura(Altura);
-            cad.setCalX(calcx);
-            cad.setCalY(calcy);
-            cad.setCalG(calcgm);
-
-            session.save(cad);
-            transaction.commit();
-            showMessageDialog(null, "Inserido com sucesso", " ", 1);      
-        } catch (HeadlessException ex) {
-            ex.getMessage();
-        } catch (HibernateException ex) {
-            transaction.rollback();
-            ex.getMessage();
-        } finally {
-            session.close();
+                session.save(cad);
+                transaction.commit();
+                showMessageDialog(null, "Inserido com sucesso", " ", 1);
+                Btn_Deletar.setEnabled(true);
+            } catch (HeadlessException ex) {
+                ex.getMessage();
+            } catch (HibernateException ex) {
+                transaction.rollback();
+                ex.getMessage();
+            } finally {
+                session.close();
+            }
         }
-
         DiametroArvore.setEnabled(false);
         AlturaArvore.setEnabled(false);
         Btn_Salvar.setEnabled(false);
@@ -226,6 +230,7 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
         float CalcX = 1 / Diametro;
         return CalcX;
     }
+
     /**
      *
      * @return
@@ -241,7 +246,7 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
     private void Btn_DeletarActionPerformed(java.awt.event.ActionEvent evt) {
 
         int linha = jTableDAP.getSelectedRow();
-      
+
         Session session = getSessionFactory().openSession();
         Transaction transaction = null;
 
@@ -252,10 +257,10 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
 
         try {
             int[] selected = jTableDAP.getSelectedRows();
-            int se= jTableDAP.getSelectedRow();
+            int se = jTableDAP.getSelectedRow();
             List<br.com.swinghibernate.view.Dadosdap> RemoverLinha = new ArrayList<br.com.swinghibernate.view.Dadosdap>(selected.length);
             for (int idx = 0; idx < selected.length; idx++) {
-               // Dadosdap dados = RemoverLinha.get(jTableDAP.convertRowIndexToModel(selected[idx]));
+                // Dadosdap dados = RemoverLinha.get(jTableDAP.convertRowIndexToModel(selected[idx]));
                 Dadosdap dados = RemoverLinha.get(idx);
 
                 transaction = session.beginTransaction();
