@@ -9,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,10 +21,9 @@ import javax.persistence.Table;
 @Table(name = "DadosGps")
 public class DadosGps implements Serializable {
     private static final Logger LOG = getLogger(DadosGps.class.getName());
-
     @Id
     @GeneratedValue(strategy = javax.persistence.GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "idGPS")
     private int id;
     @Column(name = "t", length = 2, nullable = false)
     private String t;
