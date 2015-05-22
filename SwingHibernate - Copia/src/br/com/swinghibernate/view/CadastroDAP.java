@@ -70,17 +70,17 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
         setVisible(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Diametro(cm)");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 16, 80, 20));
+        jLabel1.setText("Diametro arvore(cm)");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
 
-        jLabel2.setText("Altura(m)");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 66, 20));
+        jLabel2.setText("Altura arvore(m)");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 110, 20));
 
         DiametroArvore.setEnabled(false);
-        getContentPane().add(DiametroArvore, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 110, -1));
+        getContentPane().add(DiametroArvore, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 110, -1));
 
         AlturaArvore.setEnabled(false);
-        getContentPane().add(AlturaArvore, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 50, 110, -1));
+        getContentPane().add(AlturaArvore, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 110, -1));
 
         Btn_Inserir.setText("Novo");
         Btn_Inserir.addActionListener(new java.awt.event.ActionListener() {
