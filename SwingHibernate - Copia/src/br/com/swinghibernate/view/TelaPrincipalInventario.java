@@ -94,7 +94,7 @@ public class TelaPrincipalInventario extends javax.swing.JFrame {
         DesktopPanel.setLayout(new java.awt.FlowLayout());
         getContentPane().add(DesktopPanel);
 
-        Inicio.setLabel("Inicio");
+        Inicio.setText("Inicio");
 
         Btn_ImportarDadosGPS.setText("Importar Dados GPS");
         Btn_ImportarDadosGPS.addActionListener(new java.awt.event.ActionListener() {
