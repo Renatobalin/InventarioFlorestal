@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import static java.util.logging.Logger.getLogger;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AbstractDocument;
 import org.hibernate.HibernateException;
@@ -159,25 +160,20 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
             try {
                 transaction = session.beginTransaction();
 
-                String diamd = DiametroArvore.getText();
+                String diamd = DiametroArvore.getText().trim();
                 diamd = diamd.replaceAll(",", ".");
                 Float Diametro = valueOf(diamd);
 
-                String altr = AlturaArvore.getText();
+                String altr = AlturaArvore.getText().trim();
                 altr = altr.replaceAll(",", ".");
                 Float Altura = valueOf(altr);
 
                 float calcx = CalculaX();
                 float calcy = CalculaY();
                 float calcgm = calculaGcm();
-                String dia = valueOf(Diametro);
-                String alt = valueOf(Altura);
-                String calx = String.valueOf(calcx);
-                String caly = String.valueOf(calcy);
-                String calg = String.valueOf(calcgm);
 
                 DefaultTableModel val = (DefaultTableModel) jTableDAP.getModel();
-                val.addRow(new String[]{dia, alt, calx, caly, calg});
+                val.addRow(new Object[]{Diametro, Altura, calcx, calcy, calcgm});
 
                 DadosDap cad = new DadosDap();
                 cad.setDiametro(Diametro);
@@ -190,6 +186,7 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
                 transaction.commit();
                 showMessageDialog(null, "Inserido com sucesso", " ", 1);
                 Btn_Deletar.setEnabled(true);
+
             } catch (HeadlessException ex) {
                 ex.getMessage();
             } catch (HibernateException ex) {
@@ -199,6 +196,7 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
                 session.close();
             }
         }
+        jTableDAP = (JTable) getDadosDap().listIterator();
         DiametroArvore.setEnabled(false);
         AlturaArvore.setEnabled(false);
         Btn_Salvar.setEnabled(false);
@@ -243,43 +241,95 @@ public class CadastroDAP extends javax.swing.JInternalFrame {
         return CalcY;
     }
 
-    private void Btn_DeletarActionPerformed(java.awt.event.ActionEvent evt) {
-
-        int linha = jTableDAP.getSelectedRow();
-
+    public List<DadosDap> getDadosDap() {
         Session session = getSessionFactory().openSession();
-        Transaction transaction = null;
+        String query = "from DadosDap";
+        List<DadosDap> listdap = (List<DadosDap>) session.createQuery(query).list();
+        return listdap;
+    }
 
-        if (jTableDAP.getSelectedRow() == -1) {
-            showMessageDialog(jTableDAP, "Selecione um registro para excluir!",
-                    "Excluir registro", JOptionPane.WARNING_MESSAGE);
-        }
+    public DadosDap getdadosDapID(int idDAP) {
+        Session session = getSessionFactory().openSession();
+        return (DadosDap) session.load(DadosDap.class, idDAP);
+    }
 
+    public void deletarDapId(int id) {
+        Session session = getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        DadosDap dap = getdadosDapID(id);
+        session.delete(dap);
+        transaction.commit();
+    }
+
+    public void PreencherTable() {
+        ArrayList dados = new ArrayList();
+        String[] colunas = new String[]{"iddap", "altura", "diametro", "calg", "calx", "caly"};
+        Session session = getSessionFactory().openSession();
+        DadosDap dap = new DadosDap();
+        dap.getIdDAP();
+        dap.getDiametro();
+        dap.getAltura();
+        dap.getCalG();
+        dap.getCalX();
+        dap.getCalY();
+
+    }
+
+    private void Btn_DeletarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            List<br.com.swinghibernate.view.Dadosdap> RemoverLinha = new ArrayList<br.com.swinghibernate.view.Dadosdap>(linha);
-            Dadosdap dados = RemoverLinha.get(linha);
-
-            transaction = session.beginTransaction();
-            DadosDap cad = new DadosDap();
-            cad.setIdDAP(dados.getIddap());
-            cad.setAltura(dados.getAltura());
-            cad.setCalG(dados.getCalg());
-            cad.setCalX(dados.getCalx());
-            cad.setCalY(dados.getCaly());
-
-            session.delete(cad);
-            transaction.commit();
-            showMessageDialog(null, "Deletado com sucesso", " ", 1);
-
+            DefaultTableModel model = (DefaultTableModel) jTableDAP.getModel();
+            if (jTableDAP.getSelectedRow() == 1) {
+                if (jTableDAP.getSelectedRow() == 0) {
+                    JOptionPane.showMessageDialog(this, "Nenhum dado selecionado");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Selecione um dado");
+                }
+            } else {
+                model.removeRow(jTableDAP.getSelectedRow());
+            }
         } catch (HeadlessException ex) {
-            ex.getMessage();
-        } catch (HibernateException ex) {
-            transaction.rollback();
-            ex.getMessage();
-        } finally {
-            session.close();
+            JOptionPane.showMessageDialog(this, ex.getMessage());
         }
-        ((DefaultTableModel) jTableDAP.getModel()).removeRow(jTableDAP.getSelectedRow());
+//        int linha = jTableDAP.getSelectedRow();
+//        deletarDapId(linha);
+//        ((DefaultTableModel) jTableDAP.getModel()).removeRow(jTableDAP.getSelectedRow());
+
+//        int linha = jTableDAP.getSelectedRow();
+//        Session session = getSessionFactory().openSession();
+//        Transaction transaction = null;
+//           jTableDAP.getSelectionModel().removeListSelectionListener(jTableDAP);
+//           jTableDAP.getSelectionModel().addListSelectionListener(jTableDAP);
+//           
+//        if (jTableDAP.getSelectedRow() == -1) {
+//            showMessageDialog(jTableDAP, "Selecione um registro para excluir!",
+//                    "Excluir registro", JOptionPane.WARNING_MESSAGE);
+//        }
+//
+//        try {
+//            List<br.com.swinghibernate.view.Dadosdap> RemoverLinha = new ArrayList<br.com.swinghibernate.view.Dadosdap>(linha);
+//            Dadosdap dados = RemoverLinha.get(linha);
+//
+//            transaction = session.beginTransaction();
+//            DadosDap cad = new DadosDap();
+//            cad.setIdDAP(dados.getIddap());
+//            cad.setAltura(dados.getAltura());
+//            cad.setCalG(dados.getCalg());
+//            cad.setCalX(dados.getCalx());
+//            cad.setCalY(dados.getCaly());
+//
+//            session.delete(cad);
+//            transaction.commit();
+//            showMessageDialog(null, "Deletado com sucesso", " ", 1);
+//            
+//        ((DefaultTableModel) jTableDAP.getModel()).removeRow(jTableDAP.getSelectedRow());
+//        } catch (HeadlessException ex) {
+//            ex.getMessage();
+//        } catch (HibernateException ex) {
+//            transaction.rollback();
+//            ex.getMessage();
+//        } finally {
+//            session.close();
+//        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
